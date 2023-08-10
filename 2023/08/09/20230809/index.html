@@ -32,7 +32,7 @@
 <meta property="og:image" content="https://angelicazx.github.io/2023/08/09/20230809/pic5.png">
 <meta property="og:image" content="https://angelicazx.github.io/2023/08/09/20230809/pic6.png">
 <meta property="article:published_time" content="2023-08-09T01:10:34.000Z">
-<meta property="article:modified_time" content="2023-08-09T13:47:31.431Z">
+<meta property="article:modified_time" content="2023-08-10T15:23:28.555Z">
 <meta property="article:author" content="Angelicazx">
 <meta property="article:tag" content="Mathematical Modeling">
 <meta name="twitter:card" content="summary_large_image">
@@ -272,7 +272,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          2k words
+          3.1k words
         
       </span>
     
@@ -283,7 +283,7 @@
         
         
         
-          17 mins
+          26 mins
         
       </span>
     
@@ -385,7 +385,45 @@ LJ<span class="token operator">=</span><span class="token number">1.36</span><sp
 <p>至于代码，用anoval2函数即可</p>
 <h3 id="无交互效应"><a href="#无交互效应" class="headerlink" title="无交互效应"></a>无交互效应</h3><p><img src="/2023/08/09/20230809/pic2.png" srcset="/img/loading.gif" lazyload alt="方差分析表"><br>和单因素方差分析的拒绝条件差不多，只不过分别比较两个因素的影响即可。<br><img src="/2023/08/09/20230809/pic4.png" srcset="/img/loading.gif" lazyload alt="F检验方法"></p>
 <h3 id="有交互效应"><a href="#有交互效应" class="headerlink" title="有交互效应"></a>有交互效应</h3><p><img src="/2023/08/09/20230809/pic3.png" srcset="/img/loading.gif" lazyload alt="方差分析表"><br><img src="/2023/08/09/20230809/pic5.png" srcset="/img/loading.gif" lazyload alt="F检验方法"><br>多了一个判断有无交互关系。</p>
-<h1 id="回归分析"><a href="#回归分析" class="headerlink" title="回归分析"></a>回归分析</h1><h2 id="多元二项式"><a href="#多元二项式" class="headerlink" title="多元二项式"></a>多元二项式</h2><h3 id="重要工具箱-rstool"><a href="#重要工具箱-rstool" class="headerlink" title="重要工具箱 rstool"></a>重要工具箱 rstool</h3><p><code>rstool(X,Y,model,alpha)</code><br> <em>$\alpha$默认0.05，model默认线性模型</em><br><img src="/2023/08/09/20230809/pic6.png" srcset="/img/loading.gif" lazyload alt="四种模型"><br>rmse均方误差来衡量模型优劣，beta是回归方程的系数矩阵。</p>
+<h1 id="回归分析"><a href="#回归分析" class="headerlink" title="回归分析"></a>回归分析</h1><h2 id="一元线性回归"><a href="#一元线性回归" class="headerlink" title="一元线性回归"></a>一元线性回归</h2><p>先看散点图–判断为近似线性–先预测出md用于算出残差–再看残差图确定排除阈值–利用残差排除野值–重新建模</p>
+<figure><div class="code-wrapper"><pre class="line-numbers language-matlab" data-language="matlab"><code class="language-matlab">clc<span class="token punctuation">,</span>clear<span class="token punctuation">,</span>close all
+a<span class="token operator">=</span><span class="token function">readmatrix</span><span class="token punctuation">(</span>"data7_23<span class="token punctuation">.</span>txt"<span class="token punctuation">)</span><span class="token punctuation">;</span>
+x<span class="token operator">=</span><span class="token function">a</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token operator">:</span><span class="token punctuation">)</span><span class="token string">'; y=a(2,:)'</span><span class="token punctuation">;</span><span class="token comment">%提取x，y，并且变成列向量</span>
+<span class="token function">subplot</span><span class="token punctuation">(</span><span class="token number">121</span><span class="token punctuation">)</span><span class="token punctuation">,</span><span class="token function">plot</span><span class="token punctuation">(</span>x<span class="token punctuation">,</span>y<span class="token punctuation">,</span><span class="token string">'ko'</span><span class="token punctuation">)</span>
+md<span class="token operator">=</span><span class="token function">fitlm</span><span class="token punctuation">(</span>x<span class="token punctuation">,</span>y<span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment">%初次拟合线性回归模型</span>
+<span class="token punctuation">[</span>yh<span class="token punctuation">,</span>yhint<span class="token punctuation">]</span><span class="token operator">=</span><span class="token function">predict</span><span class="token punctuation">(</span>md<span class="token punctuation">,</span>x<span class="token punctuation">)</span><span class="token comment">%求预测值和置信区间</span>
+<span class="token function">subplot</span><span class="token punctuation">(</span><span class="token number">122</span><span class="token punctuation">)</span><span class="token punctuation">,</span><span class="token function">plotResiduals</span><span class="token punctuation">(</span>md<span class="token punctuation">,</span><span class="token string">'caseorder'</span><span class="token punctuation">)</span><span class="token comment">%画残差图</span>
+r<span class="token operator">=</span>y<span class="token operator">-</span>yh
+ind<span class="token operator">=</span><span class="token function">find</span><span class="token punctuation">(</span><span class="token function">abs</span><span class="token punctuation">(</span>r<span class="token punctuation">)</span><span class="token operator">>=</span><span class="token number">1.5</span><span class="token punctuation">)</span><span class="token comment">%求残差及野值编号</span>
+md2<span class="token operator">=</span><span class="token function">fitlm</span><span class="token punctuation">(</span>x<span class="token punctuation">,</span>y<span class="token punctuation">,</span><span class="token string">'Exclude'</span><span class="token punctuation">,</span>ind<span class="token punctuation">)</span><span class="token comment">%排除野值后重新建模</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div></figure>
+
+<h2 id="一元非线性回归"><a href="#一元非线性回归" class="headerlink" title="一元非线性回归"></a>一元非线性回归</h2><p>唯一不同的就是运用非线性回归模型fitnlm.并且如果规定了方程形式，还需要用匿名函数来定义.</p>
+<figure><div class="code-wrapper"><pre class="line-numbers language-matlab" data-language="matlab"><code class="language-matlab">clc<span class="token punctuation">,</span>clear
+d<span class="token operator">=</span><span class="token punctuation">[</span><span class="token number">1</span> <span class="token number">2</span> <span class="token number">4</span> <span class="token number">5</span> <span class="token number">7</span> <span class="token number">8</span> <span class="token number">9</span> <span class="token number">10</span>
+   <span class="token number">1.3</span> <span class="token number">1</span> <span class="token number">0.9</span> <span class="token number">0.81</span> <span class="token number">0.7</span> <span class="token number">0.6</span> <span class="token number">0.55</span> <span class="token number">0.4</span><span class="token punctuation">]</span>
+x<span class="token operator">=</span><span class="token function">d</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token operator">:</span><span class="token punctuation">)</span><span class="token string">';y=d(2,:)'</span><span class="token punctuation">;</span>
+fun<span class="token operator">=</span><span class="token operator">@</span><span class="token punctuation">(</span>a<span class="token punctuation">,</span>x<span class="token punctuation">)</span><span class="token punctuation">(</span><span class="token function">a</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token operator">./</span>x<span class="token operator">+</span><span class="token function">a</span><span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">)</span><span class="token operator">+</span><span class="token function">a</span><span class="token punctuation">(</span><span class="token number">3</span><span class="token punctuation">)</span><span class="token operator">*</span>x<span class="token operator">+</span><span class="token function">a</span><span class="token punctuation">(</span><span class="token number">4</span><span class="token punctuation">)</span><span class="token operator">*</span><span class="token punctuation">(</span>x<span class="token operator">.^</span><span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment">%用匿名函数定义要拟合的函数</span>
+a0<span class="token operator">=</span><span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token operator">'</span><span class="token punctuation">;</span><span class="token comment">%给回归系数赋初值</span>
+md<span class="token operator">=</span><span class="token function">fitnlm</span><span class="token punctuation">(</span>x<span class="token punctuation">,</span>y<span class="token punctuation">,</span>fun<span class="token punctuation">,</span>a0<span class="token punctuation">)</span><span class="token comment">%拟合非线性回归模型</span>
+a_ci<span class="token operator">=</span><span class="token function">coefCI</span><span class="token punctuation">(</span>md<span class="token punctuation">)</span><span class="token comment">%求拟合参数的置信区间</span>
+<span class="token punctuation">[</span>y_pre<span class="token punctuation">,</span>y_ci<span class="token punctuation">]</span><span class="token operator">=</span><span class="token function">predict</span><span class="token punctuation">(</span>md<span class="token punctuation">,</span>x<span class="token punctuation">)</span><span class="token comment">%计算y的预测值和置信区间</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div></figure>
+
+<h2 id="多元非线性回归"><a href="#多元非线性回归" class="headerlink" title="多元非线性回归"></a>多元非线性回归</h2><p>主要体现在匿名函数中x的写法上需要划分x1，x2,…<br>例如<code>fun=@(beta,x) (beta(4)*x(:,2)-x(:,3)/beta(5))./(1+beta(1)*x(:,1)+beta(2)*x(:,2)+beta(3)*x(:,3))</code></p>
+<h2 id="多元二项式回归"><a href="#多元二项式回归" class="headerlink" title="多元二项式回归"></a>多元二项式回归</h2><h3 id="重要工具箱-rstool"><a href="#重要工具箱-rstool" class="headerlink" title="重要工具箱 rstool"></a>重要工具箱 rstool</h3><p><code>rstool(X,Y,model,alpha)</code><br> <em>$\alpha$默认0.05，model默认线性模型</em><br><img src="/2023/08/09/20230809/pic6.png" srcset="/img/loading.gif" lazyload alt="四种模型"><br>rmse均方误差来衡量模型优劣，beta是回归方程的系数矩阵。</p>
+<h2 id="逐步回归"><a href="#逐步回归" class="headerlink" title="逐步回归"></a>逐步回归</h2><p>逐步回归的作用在于<u><em>从众多变量中挑选出对因变量影响显著的自变量</em></u>.<br>可以分为 <u><em>前进法、后退法、逐步回归法</em></u>.</p>
+<ul>
+<li><strong>前进法:</strong> 从一个变量到全部变量引入。</li>
+<li><strong>后退法:</strong> 从全部变量引入，每次删除系数绝对值最小的变量。</li>
+<li><strong>逐步回归法:</strong> 一个一个引入变量，每次引入后都进行F检验，适当做些变量剔除。<figure><div class="code-wrapper"><pre class="line-numbers language-matlab" data-language="matlab"><code class="language-matlab">clc<span class="token punctuation">,</span>clear<span class="token punctuation">,</span>close all
+a<span class="token operator">=</span><span class="token function">readmatrix</span><span class="token punctuation">(</span><span class="token string">'data7_25.txt'</span><span class="token punctuation">)</span>
+x<span class="token operator">=</span><span class="token function">a</span><span class="token punctuation">(</span><span class="token operator">:</span><span class="token punctuation">,</span><span class="token punctuation">[</span><span class="token number">1</span><span class="token operator">:</span><span class="token keyword">end</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span> y<span class="token operator">=</span><span class="token function">a</span><span class="token punctuation">(</span><span class="token operator">:</span><span class="token punctuation">,</span><span class="token keyword">end</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token comment">%输入不同的组合尝试qwq</span>
+md0<span class="token operator">=</span><span class="token function">fitlm</span><span class="token punctuation">(</span>x<span class="token punctuation">,</span>y<span class="token punctuation">)</span>
+md1<span class="token operator">=</span><span class="token function">fitlm</span><span class="token punctuation">(</span>x<span class="token punctuation">,</span>y<span class="token punctuation">,</span><span class="token string">'y~1+x1+x2+x4'</span><span class="token punctuation">)</span>
+md2<span class="token operator">=</span><span class="token function">fitlm</span><span class="token punctuation">(</span>x<span class="token punctuation">,</span>y<span class="token punctuation">,</span><span class="token string">'y~1+x1+x2'</span><span class="token punctuation">)</span>
+<span class="token comment">%一步到位</span>
+md<span class="token operator">=</span><span class="token function">stepwiselm</span><span class="token punctuation">(</span>x<span class="token punctuation">,</span>y<span class="token punctuation">,</span><span class="token string">'y~1+x1+x2+x3+x4'</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div></figure></li>
+</ul>
 
                 
               </div>
