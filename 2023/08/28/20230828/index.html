@@ -1,0 +1,813 @@
+
+
+<!DOCTYPE html>
+<html lang="en" data-default-color-scheme=true>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/yui.jpg">
+  <link rel="icon" href="/img/yui.jpg">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Angelicazx">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="差分方程建模学习O.O">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Difference Equation Modeling">
+<meta property="og:url" content="https://angelicazx.github.io/2023/08/28/20230828/index.html">
+<meta property="og:site_name" content="Angelicazx&#39;s blog">
+<meta property="og:description" content="差分方程建模学习O.O">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://angelicazx.github.io/2023/08/28/20230828/pic1.png">
+<meta property="article:published_time" content="2023-08-28T03:01:46.000Z">
+<meta property="article:modified_time" content="2023-08-29T14:12:48.568Z">
+<meta property="article:author" content="Angelicazx">
+<meta property="article:tag" content="Mathematical Modeling">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://angelicazx.github.io/2023/08/28/20230828/pic1.png">
+  
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+  
+  <title>Difference Equation Modeling | Angelicazx&#39;s blog</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/prism/1.29.0/plugins/line-numbers/prism-line-numbers.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"angelicazx.github.io","root":"/","version":"1.9.5","typing":{"enable":true,"typeSpeed":70,"cursorChar":"&#9610","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+  
+
+  
+    <!-- Google tag (gtag.js) -->
+    <script async>
+      if (!Fluid.ctx.dnt) {
+        Fluid.utils.createScript("https://www.googletagmanager.com/gtag/js?id=", function() {
+          window.dataLayer = window.dataLayer || [];
+          function gtag() {
+            dataLayer.push(arguments);
+          }
+          gtag('js', new Date());
+          gtag('config', '');
+        });
+      }
+    </script>
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Angelicazx&#39;s blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                <span>Home</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>Archives</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                <span>Categories</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>Tags</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                <span>About</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/links/">
+                <i class="iconfont icon-link-fill"></i>
+                <span>Links</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="Difference Equation Modeling"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2023-08-28 11:01" pubdate>
+          August 28, 2023 am
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          2.3k words
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          19 mins
+        
+      </span>
+    
+
+    
+    
+      
+        <span id="busuanzi_container_page_pv" style="display: none">
+          <i class="iconfont icon-eye" aria-hidden="true"></i>
+          <span id="busuanzi_value_page_pv"></span> views
+        </span>
+        
+      
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">Difference Equation Modeling</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <p>差分方程建模学习O.O</p>
+<span id="more"></span>
+
+<p>&emsp; 差分方程和微分方程都是描述状态变化问题的机理建模方法，前者适用于离散情况，后者适用于连续情况。差分方程可以类比为数列的递推关系。 </p>
+<h1 id="差分方程建模"><a href="#差分方程建模" class="headerlink" title="差分方程建模"></a>差分方程建模</h1><h2 id="已知递推方程且简单"><a href="#已知递推方程且简单" class="headerlink" title="已知递推方程且简单"></a>已知递推方程且简单</h2><p>&emsp; 例如借贷问题。可以直接写出递推方程，据此算出通项公式。</p>
+<h2 id="已知差分格式但未知系数"><a href="#已知差分格式但未知系数" class="headerlink" title="已知差分格式但未知系数"></a>已知差分格式但未知系数</h2><p>&emsp; 例如人口增长模型$x_{k+1}-x_{k}&#x3D;r(1-sx_{k})x_{k}\Delta t$,可建立差分模型:</p>
+<p>$$<br>\begin{cases}<br>   x_{k+1}&#x3D;\alpha x_k +\beta x_k^2 , \\<br>   x_0&#x3D;3.9<br>\end{cases}<br>$$<br>&emsp; 据此得到关于$\alpha,\beta$的超定线性方程组：<br>$$<br>\begin{bmatrix}<br>x_{0}&amp;x_{0}^2\\<br>x_{1}&amp;x_{1}^2\\<br>\vdots&amp;\vdots\\<br>x_{20}&amp;x_{20}^2<br>\end{bmatrix}\begin{bmatrix}<br>\alpha \\<br>\beta<br>\end{bmatrix}&#x3D;\begin{bmatrix}<br>x_1\\<br>x_2\\<br>\vdots\\<br>x_{21}<br>\end{bmatrix}<br>$$<br> &emsp; 这里是用 <strong>最小二乘法</strong> 来确定方程系数。这里是把$x_{k+1}$作为因变量，$x_{k}$作为自变量。代码如下：<br> <figure><div class="code-wrapper"><pre class="line-numbers language-matlab" data-language="matlab"><code class="language-matlab"> clc<span class="token punctuation">,</span>clear<span class="token punctuation">,</span>a<span class="token operator">=</span><span class="token function">readmatrix</span><span class="token punctuation">(</span>"data6_18<span class="token punctuation">.</span>txt"<span class="token punctuation">)</span><span class="token punctuation">;</span>
+x<span class="token operator">=</span><span class="token function">a</span><span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token number">2</span><span class="token operator">:</span><span class="token number">2</span><span class="token operator">:</span><span class="token number">6</span><span class="token punctuation">]</span><span class="token punctuation">,</span><span class="token operator">:</span><span class="token punctuation">)</span><span class="token operator">'</span><span class="token punctuation">;</span>x<span class="token operator">=</span><span class="token function">x</span><span class="token punctuation">(</span><span class="token operator">~</span><span class="token function">isnan</span><span class="token punctuation">(</span>x<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+A<span class="token operator">=</span><span class="token punctuation">[</span><span class="token function">x</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token operator">:</span><span class="token keyword">end</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">,</span><span class="token function">x</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token operator">:</span><span class="token keyword">end</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token operator">.^</span><span class="token number">2</span><span class="token punctuation">]</span><span class="token punctuation">;</span><span class="token comment">%构造线性方程组系数矩阵</span>
+cs<span class="token operator">=</span><span class="token function">pinv</span><span class="token punctuation">(</span>A<span class="token punctuation">)</span><span class="token operator">*</span><span class="token function">x</span><span class="token punctuation">(</span><span class="token number">2</span><span class="token operator">:</span><span class="token keyword">end</span><span class="token punctuation">)</span><span class="token comment">%求最小二乘解</span>
+y_2010<span class="token operator">=</span><span class="token punctuation">[</span><span class="token function">x</span><span class="token punctuation">(</span><span class="token keyword">end</span><span class="token punctuation">)</span><span class="token punctuation">,</span><span class="token function">x</span><span class="token punctuation">(</span><span class="token keyword">end</span><span class="token punctuation">)</span><span class="token operator">^</span><span class="token number">2</span><span class="token punctuation">]</span><span class="token operator">*</span>cs<span class="token comment">%求2010年的预测值</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre></div></figure></p>
+<h2 id="差分阶数的选择"><a href="#差分阶数的选择" class="headerlink" title="差分阶数的选择"></a>差分阶数的选择</h2><p> &emsp; 例如每季度销售额，按每季度来建立不同的差分方程，用最小二乘法拟合。<br> <figure><div class="code-wrapper"><pre class="line-numbers language-matlab" data-language="matlab"><code class="language-matlab"> y0<span class="token operator">=</span><span class="token punctuation">[</span><span class="token number">11</span> <span class="token number">16</span> <span class="token number">25</span> <span class="token number">12</span> <span class="token number">12</span> <span class="token number">18</span> <span class="token number">26</span> <span class="token number">14</span> <span class="token number">13</span> <span class="token number">20</span> <span class="token number">27</span> <span class="token number">15</span> <span class="token number">15</span> <span class="token number">24</span> <span class="token number">30</span> <span class="token number">15</span> <span class="token number">16</span> <span class="token number">25</span> <span class="token number">32</span> <span class="token number">17</span><span class="token punctuation">]</span><span class="token operator">'</span><span class="token punctuation">;</span>
+y<span class="token operator">=</span><span class="token function">y0</span><span class="token punctuation">(</span><span class="token number">9</span><span class="token operator">:</span><span class="token number">20</span><span class="token punctuation">)</span><span class="token punctuation">;</span> x<span class="token operator">=</span><span class="token punctuation">[</span><span class="token function">y0</span><span class="token punctuation">(</span><span class="token number">5</span><span class="token operator">:</span><span class="token number">16</span><span class="token punctuation">)</span><span class="token punctuation">,</span><span class="token function">y0</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token operator">:</span><span class="token number">12</span><span class="token punctuation">)</span><span class="token punctuation">,</span><span class="token function">ones</span><span class="token punctuation">(</span><span class="token number">12</span><span class="token punctuation">,</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+z<span class="token operator">=</span>x<span class="token operator">\</span>y
+<span class="token keyword">for</span> t<span class="token operator">=</span><span class="token number">21</span><span class="token operator">:</span><span class="token number">25</span>
+    <span class="token function">y0</span><span class="token punctuation">(</span>t<span class="token punctuation">)</span><span class="token operator">=</span><span class="token function">z</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token operator">*</span><span class="token function">y0</span><span class="token punctuation">(</span>t<span class="token operator">-</span><span class="token number">4</span><span class="token punctuation">)</span><span class="token operator">+</span><span class="token function">z</span><span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">)</span><span class="token operator">*</span><span class="token function">y0</span><span class="token punctuation">(</span>t<span class="token operator">-</span><span class="token number">8</span><span class="token punctuation">)</span><span class="token operator">+</span><span class="token function">z</span><span class="token punctuation">(</span><span class="token number">3</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">end</span>
+yhat<span class="token operator">=</span><span class="token function">y0</span><span class="token punctuation">(</span><span class="token number">21</span><span class="token operator">:</span><span class="token number">25</span><span class="token punctuation">)</span>   <span class="token comment">%提取t=21,…，25时的预测值</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div></figure><br>&emsp; 为了方便计算，要把n阶差分方程写成一阶差分方程组（n阶矩阵形式），再利用特征值和特征向量求解。以斐波那契通项公式的求解为例：<br><img src="/2023/08/28/20230828/pic1.png" srcset="/img/loading.gif" lazyload><br>将矩阵相似对角化为$A&#x3D;PDP^{-1}$,则$A^k&#x3D;PD^kP^{-1}$  </p>
+<figure><div class="code-wrapper"><pre class="line-numbers language-matlab" data-language="matlab"><code class="language-matlab">clc<span class="token punctuation">,</span> clear<span class="token punctuation">,</span> syms k positive integer
+A <span class="token operator">=</span> <span class="token function">sym</span><span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">;</span> <span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>  <span class="token comment">%构造符号矩阵</span>
+P <span class="token operator">=</span> <span class="token function">charpoly</span><span class="token punctuation">(</span>A<span class="token punctuation">)</span>  <span class="token comment">%计算特征多项式</span>
+r <span class="token operator">=</span> <span class="token function">roots</span><span class="token punctuation">(</span>P<span class="token punctuation">)</span>  <span class="token comment">%求特征值</span>
+<span class="token punctuation">[</span>P<span class="token punctuation">,</span> D<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token function">eig</span><span class="token punctuation">(</span>A<span class="token punctuation">)</span>  <span class="token comment">%把A相似对角化</span>
+Ak <span class="token operator">=</span> P<span class="token operator">*</span>D<span class="token operator">.^</span>k<span class="token operator">*</span><span class="token function">inv</span><span class="token punctuation">(</span>P<span class="token punctuation">)</span><span class="token operator">*</span><span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">;</span><span class="token number">1</span><span class="token punctuation">]</span>
+Ak <span class="token operator">=</span> <span class="token function">simplify</span><span class="token punctuation">(</span>Ak<span class="token punctuation">)</span><span class="token punctuation">,</span> Fk <span class="token operator">=</span> <span class="token function">Ak</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div></figure>
+
+<h1 id="最优捕鱼策略问题"><a href="#最优捕鱼策略问题" class="headerlink" title="最优捕鱼策略问题"></a>最优捕鱼策略问题</h1><p>写出递推关系，将一阶差分方程组写成矩阵形式。于是问题就转化成非线性规划问题，约束条件是差分方程组的平衡解稳定。</p>
+<p>当局部最优解稳定时，可以直接在matlab里进行非线性规划</p>
+<figure><div class="code-wrapper"><pre class="line-numbers language-matlab" data-language="matlab"><code class="language-matlab">clc<span class="token punctuation">,</span> clear<span class="token punctuation">,</span> prob <span class="token operator">=</span> eqnproblem<span class="token punctuation">;</span>
+x<span class="token operator">=</span><span class="token function">optimvar</span><span class="token punctuation">(</span><span class="token string">'x'</span><span class="token punctuation">,</span><span class="token number">5</span><span class="token punctuation">,</span><span class="token string">'LowerBound'</span><span class="token punctuation">,</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+q<span class="token operator">=</span><span class="token function">optimvar</span><span class="token punctuation">(</span><span class="token string">'q'</span><span class="token punctuation">,</span><span class="token string">'LowerBound'</span><span class="token punctuation">,</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+P<span class="token operator">=</span><span class="token function">diag</span><span class="token punctuation">(</span><span class="token punctuation">[</span>q<span class="token punctuation">,</span><span class="token number">0.98</span><span class="token punctuation">,</span><span class="token number">0.95</span><span class="token punctuation">,</span><span class="token number">0.80</span><span class="token punctuation">]</span><span class="token punctuation">,</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment">%输入次对角线元素</span>
+<span class="token function">P</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token punctuation">[</span><span class="token number">2</span><span class="token operator">:</span><span class="token keyword">end</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token operator">=</span><span class="token punctuation">[</span><span class="token number">1.8</span><span class="token punctuation">,</span><span class="token number">2.4</span><span class="token punctuation">,</span><span class="token number">2.0</span><span class="token punctuation">,</span><span class="token number">1.8</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+<span class="token comment">%P=[0 1.8 2.4 2.0 1.8</span>
+<span class="token comment">%   q  0   0   0   0</span>
+<span class="token comment">%   0  0.98 0  0   0</span>
+<span class="token comment">%   0  0   0.95 0  0</span>
+<span class="token comment">%   0  0   0    0.8 0 ]</span>
+x0<span class="token punctuation">.</span>q<span class="token operator">=</span>rand<span class="token punctuation">;</span> x0<span class="token punctuation">.</span>x<span class="token operator">=</span><span class="token function">rand</span><span class="token punctuation">(</span><span class="token number">5</span><span class="token punctuation">,</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>  <span class="token comment">%初值</span>
+prob<span class="token punctuation">.</span>Equations<span class="token operator">=</span><span class="token punctuation">[</span>x<span class="token operator">==</span>P<span class="token operator">*</span>x<span class="token punctuation">;</span> <span class="token function">sum</span><span class="token punctuation">(</span>x<span class="token punctuation">)</span><span class="token operator">==</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+<span class="token punctuation">[</span>sol<span class="token punctuation">,</span>fval<span class="token punctuation">,</span>flag<span class="token punctuation">]</span><span class="token operator">=</span><span class="token function">solve</span><span class="token punctuation">(</span>prob<span class="token punctuation">,</span> x0<span class="token punctuation">)</span>
+sq<span class="token operator">=</span>sol<span class="token punctuation">.</span>q<span class="token punctuation">,</span> sx<span class="token operator">=</span>sol<span class="token punctuation">.</span>x  <span class="token comment">%显示非线性方程组的解</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div></figure>
+
+<p>局部最优解不稳定，用搜索算法，合理确定步长。</p>
+<figure><div class="code-wrapper"><pre class="line-numbers language-matlab" data-language="matlab"><code class="language-matlab">clc<span class="token punctuation">,</span> clear<span class="token punctuation">,</span> close all<span class="token punctuation">,</span> format long g
+a <span class="token operator">=</span> <span class="token number">1</span> <span class="token operator">-</span> <span class="token number">0.2</span><span class="token operator">^</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token operator">/</span><span class="token number">12</span><span class="token punctuation">)</span><span class="token punctuation">;</span> m <span class="token operator">=</span> <span class="token number">1.109</span> <span class="token operator">*</span> <span class="token number">10</span> <span class="token operator">^</span> <span class="token number">5</span>
+w3 <span class="token operator">=</span> <span class="token number">17.86</span><span class="token punctuation">;</span> w4 <span class="token operator">=</span> <span class="token number">22.99</span>
+X<span class="token operator">=</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">;</span> Z<span class="token operator">=</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">;</span> N<span class="token operator">=</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">;</span> K <span class="token operator">=</span> <span class="token number">0</span><span class="token operator">:</span><span class="token number">0.001</span><span class="token operator">:</span><span class="token number">0.874</span><span class="token punctuation">;</span>
+<span class="token keyword">for</span> k <span class="token operator">=</span> K
+    x1 <span class="token operator">=</span> <span class="token number">1.22</span><span class="token operator">*</span><span class="token number">10</span><span class="token operator">^</span><span class="token number">11</span><span class="token operator">*</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token operator">-</span><span class="token number">1</span><span class="token operator">/</span><span class="token punctuation">(</span>m<span class="token operator">*</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token operator">-</span>a<span class="token operator">-</span><span class="token number">0.42</span><span class="token operator">*</span>k<span class="token punctuation">)</span><span class="token operator">^</span><span class="token number">8</span><span class="token operator">*</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token operator">-</span>a<span class="token punctuation">)</span><span class="token operator">^</span><span class="token number">24</span><span class="token operator">*</span> <span class="token punctuation">...</span>
+        <span class="token punctuation">(</span><span class="token number">1</span><span class="token operator">/</span><span class="token number">2</span><span class="token operator">+</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token operator">-</span>a<span class="token operator">-</span>k<span class="token punctuation">)</span><span class="token operator">^</span><span class="token number">8</span><span class="token operator">*</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token operator">-</span>a<span class="token punctuation">)</span><span class="token operator">^</span><span class="token number">4</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    x2 <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token number">1</span><span class="token operator">-</span>a<span class="token punctuation">)</span><span class="token operator">^</span><span class="token number">12</span><span class="token operator">*</span>x1<span class="token punctuation">;</span> x3 <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token number">1</span><span class="token operator">-</span>a<span class="token punctuation">)</span><span class="token operator">^</span><span class="token number">12</span><span class="token operator">*</span>x2<span class="token punctuation">;</span>
+    x4 <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token number">1</span><span class="token operator">-</span>a<span class="token operator">-</span><span class="token number">0.42</span><span class="token operator">*</span>k<span class="token punctuation">)</span><span class="token operator">^</span><span class="token number">8</span><span class="token operator">*</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token operator">-</span>a<span class="token punctuation">)</span><span class="token operator">^</span><span class="token number">4</span><span class="token operator">*</span>x3<span class="token punctuation">;</span>
+    X <span class="token operator">=</span> <span class="token punctuation">[</span>X<span class="token punctuation">,</span> <span class="token punctuation">[</span>x1<span class="token punctuation">;</span>x2<span class="token punctuation">;</span>x3<span class="token punctuation">;</span>x4<span class="token punctuation">]</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+    n <span class="token operator">=</span> m<span class="token operator">*</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token operator">-</span>a<span class="token operator">-</span><span class="token number">0.42</span><span class="token operator">*</span>k<span class="token punctuation">)</span><span class="token operator">^</span><span class="token number">8</span><span class="token operator">*</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token operator">-</span>a<span class="token punctuation">)</span><span class="token operator">^</span><span class="token number">24</span><span class="token operator">*</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token operator">/</span><span class="token number">2</span><span class="token operator">+</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token operator">-</span>a<span class="token operator">-</span>k<span class="token punctuation">)</span><span class="token operator">^</span><span class="token number">8</span><span class="token operator">*</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token operator">-</span>a<span class="token punctuation">)</span><span class="token operator">^</span><span class="token number">4</span><span class="token punctuation">)</span><span class="token operator">*</span>x1<span class="token punctuation">;</span>
+    N <span class="token operator">=</span> <span class="token punctuation">[</span>N<span class="token punctuation">,</span> n<span class="token punctuation">]</span><span class="token punctuation">;</span>
+    z <span class="token operator">=</span> <span class="token number">0.42</span><span class="token operator">*</span>k<span class="token operator">*</span>w3<span class="token operator">*</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token operator">-</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token operator">-</span>a<span class="token operator">-</span><span class="token number">0.42</span><span class="token operator">*</span>k<span class="token punctuation">)</span><span class="token operator">^</span><span class="token number">8</span><span class="token punctuation">)</span><span class="token operator">/</span><span class="token punctuation">(</span>a<span class="token operator">+</span><span class="token number">0.42</span><span class="token operator">*</span>k<span class="token punctuation">)</span><span class="token operator">*</span>x3<span class="token operator">+</span> <span class="token punctuation">...</span>
+         k<span class="token operator">*</span>w4<span class="token operator">*</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token operator">-</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token operator">-</span>a<span class="token operator">-</span>k<span class="token punctuation">)</span><span class="token operator">^</span><span class="token number">8</span><span class="token punctuation">)</span><span class="token operator">/</span><span class="token punctuation">(</span>a<span class="token operator">+</span>k<span class="token punctuation">)</span><span class="token operator">*</span>x4<span class="token punctuation">;</span>
+    Z <span class="token operator">=</span> <span class="token punctuation">[</span>Z<span class="token punctuation">,</span> z<span class="token punctuation">]</span><span class="token punctuation">;</span>
+<span class="token keyword">end</span>
+<span class="token punctuation">[</span>mz<span class="token punctuation">,</span> ind<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token function">max</span><span class="token punctuation">(</span>Z<span class="token punctuation">)</span>
+k4 <span class="token operator">=</span> <span class="token function">K</span><span class="token punctuation">(</span>ind<span class="token punctuation">)</span><span class="token punctuation">,</span> k3 <span class="token operator">=</span> <span class="token number">0.42</span> <span class="token operator">*</span> k4  <span class="token comment">%最优捕捞强度</span>
+xx <span class="token operator">=</span> <span class="token function">X</span><span class="token punctuation">(</span><span class="token operator">:</span><span class="token punctuation">,</span>ind<span class="token punctuation">)</span>  <span class="token comment">%各年龄组的鱼群数</span>
+<span class="token function">plot</span><span class="token punctuation">(</span>K<span class="token punctuation">,</span> Z<span class="token punctuation">)</span> <span class="token punctuation">;</span> <span class="token function">xlabel</span><span class="token punctuation">(</span><span class="token string">'$k$'</span><span class="token punctuation">,</span> <span class="token string">'Interpreter'</span><span class="token punctuation">,</span> <span class="token string">'Latex'</span><span class="token punctuation">)</span>
+<span class="token function">ylabel</span><span class="token punctuation">(</span><span class="token string">'$z$'</span><span class="token punctuation">,</span> <span class="token string">'Interpreter'</span><span class="token punctuation">,</span> <span class="token string">'Latex'</span><span class="token punctuation">,</span> <span class="token string">'Rotation'</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div></figure>
+
+
+
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Note/" class="category-chain-item">Note</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/Mathematical-Modeling/" class="print-no-link">#Mathematical Modeling</a>
+      
+    </div>
+  
+</div>
+
+
+              
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2023/08/09/20230809/" title="Statistical Modeling">
+                        <span class="hidden-mobile">Statistical Modeling</span>
+                        <span class="visible-mobile">Next</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+  
+  
+    <article id="comments" lazyload>
+      
+    <div id="giscus" class="giscus"></div>
+    <script type="text/javascript">
+      Fluid.utils.loadComments('#giscus', function() {
+        var options = {"repo":"Angelicazx/Angelicazx.github.io","repo-id":"R_kgDOKAvGgw","category":"General","category-id":"DIC_kwDOKAvGg84CYaBq","theme-light":"light","theme-dark":"dark","mapping":"pathname","reactions-enabled":1,"emit-metadata":0,"input-position":"top","lang":"en"};
+        var attributes = {};
+        for (let option in options) {
+          if (!option.startsWith('theme-')) {
+            var key = option.startsWith('data-') ? option : 'data-' + option;
+            attributes[key] = options[option];
+          }
+        }
+        var light = 'light';
+        var dark = 'dark';
+        window.GiscusThemeLight = light;
+        window.GiscusThemeDark = dark;
+        attributes['data-theme'] = document.documentElement.getAttribute('data-user-color-scheme') === 'dark' ? dark : light;
+        for (let attribute in attributes) {
+          var value = attributes[attribute];
+          if (value === undefined || value === null || value === '') {
+            delete attributes[attribute];
+          }
+        }
+        var s = document.createElement('script');
+        s.setAttribute('src', 'https://giscus.app/client.js');
+        s.setAttribute('crossorigin', 'anonymous');
+        for (let attribute in attributes) {
+          s.setAttribute(attribute, attributes[attribute]);
+        }
+        var ss = document.getElementsByTagName('script');
+        var e = ss.length > 0 ? ss[ss.length - 1] : document.head || document.documentElement;
+        e.parentNode.insertBefore(s, e.nextSibling);
+      });
+    </script>
+    <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+    </article>
+  
+
+
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>Table of Contents</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+  
+  
+
+
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">Keyword</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script  src="https://lib.baomitu.com/prism/1.29.0/plugins/line-numbers/prism-line-numbers.min.js" ></script>
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  
+      <script>
+        if (!window.MathJax) {
+          window.MathJax = {
+            tex    : {
+              inlineMath: { '[+]': [['$', '$']] }
+            },
+            loader : {
+              load: ['ui/lazy']
+            },
+            options: {
+              renderActions: {
+                insertedScript: [200, () => {
+                  document.querySelectorAll('mjx-container').forEach(node => {
+                    let target = node.parentNode;
+                    if (target.nodeName.toLowerCase() === 'li') {
+                      target.parentNode.classList.add('has-jax');
+                    }
+                  });
+                }, '', false]
+              }
+            }
+          };
+        } else {
+          MathJax.startup.document.state(0);
+          MathJax.texReset();
+          MathJax.typeset();
+          MathJax.typesetPromise();
+        }
+
+        Fluid.events.registerRefreshCallback(function() {
+          if ('MathJax' in window && MathJax.startup.document && typeof MathJax.startup.document.state === 'function') {
+            MathJax.startup.document.state(0);
+            MathJax.texReset();
+            MathJax.typeset();
+            MathJax.typesetPromise();
+          }
+        });
+      </script>
+    
+
+  <script  src="https://lib.baomitu.com/mathjax/3.2.2/es5/tex-mml-chtml.js" ></script>
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">Blog works best with JavaScript enabled</div>
+  </noscript>
+</body>
+</html>
